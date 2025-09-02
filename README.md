@@ -1,38 +1,40 @@
-# QR Factorization
+# Cholesky Decomposition Implementation
 
-This project implements QR factorization using Householder reflections and compares the results with NumPy's built-in `np.linalg.qr` function.
+This repository contains a Python implementation of the Cholesky decomposition algorithm for positive definite matrices.
 
-## Features
+## Functions
 
-- **QR Factorization**: Custom implementation using Householder reflections
-- **Matrix Comparison**: Function to compare matrices with numerical tolerance
-- **Pascal Matrix Generator**: Creates Pascal matrices for testing
-- **Verification**: Compares custom implementation with NumPy's implementation
+### `Cholesky(A)`
+Performs Cholesky decomposition on matrix A.
 
-## Code Structure
+**Parameters:**
+- `A`: Input matrix (must be symmetric positive definite)
 
-### Main Functions
+**Returns:**
+- `L`: Lower triangular matrix such that A = LLᵀ
+- `p`: Flag indicating if matrix is positive definite (0 = yes, 1 = no)
 
-#### `qr(A):` Performs QR factorization.
+### `Cholesky_validation(A)`
+Validates the Cholesky decomposition by comparing with NumPy's built-in implementation.
 
-#### `compare_matrices_with_tolerance(A, B, tolerance=1e-10):` Compares two matrices with a specified tolerance.
-
-#### `pascal_matrix(n):` Generates an n x n Pascal matrix.
-
+### `definida_positiva(A)`
+Checks if a matrix is positive definite using the Cholesky decomposition.
 
 ## Example Usage
 
 ```python
-# Generate a 6x6 Pascal matrix
-A = pascal_matrix(6)
+import numpy as np
 
-# Perform QR factorization
-Q, R = qr(A)
+# Define a positive definite matrix
+A = np.array([[1, 1, 1], 
+              [1, 2, 3], 
+              [1, 3, 6]], dtype=np.float64)
 
-# Compare with NumPy's implementation
-Q_numpy, R_numpy = np.linalg.qr(A)
-compare_matrices_with_tolerance(Q, Q_numpy)
-compare_matrices_with_tolerance(R, R_numpy)
+# Perform Cholesky decomposition
+L, p = Cholesky(A)
 
-# Reconstruct original matrix
-A_reconstructed = Q @ R
+# Validate the result
+Cholesky_validation(A)
+
+# Check if matrix is positive definite
+definida_positiva(A)
