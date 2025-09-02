@@ -1,40 +1,38 @@
-# Cholesky Decomposition Implementation
+# QR Factorization
 
-This repository contains a Python implementation of the Cholesky decomposition algorithm for positive definite matrices.
+This project implements QR factorization using Householder reflections and compares the results with NumPy's built-in `np.linalg.qr` function.
 
-## Functions
+## Features
 
-### `Cholesky(A)`
-Performs Cholesky decomposition on matrix A.
+- **QR Factorization**: Custom implementation using Householder reflections
+- **Matrix Comparison**: Function to compare matrices with numerical tolerance
+- **Pascal Matrix Generator**: Creates Pascal matrices for testing
+- **Verification**: Compares custom implementation with NumPy's implementation
 
-**Parameters:**
-- `A`: Input matrix (must be symmetric positive definite)
+## Code Structure
 
-**Returns:**
-- `L`: Lower triangular matrix such that A = LLᵀ
-- `p`: Flag indicating if matrix is positive definite (0 = yes, 1 = no)
+### Main Functions
 
-### `Cholesky_validation(A)`
-Validates the Cholesky decomposition by comparing with NumPy's built-in implementation.
+#### `qr(A):` Performs QR factorization.
 
-### `definida_positiva(A)`
-Checks if a matrix is positive definite using the Cholesky decomposition.
+#### `compare_matrices_with_tolerance(A, B, tolerance=1e-10):` Compares two matrices with a specified tolerance.
+
+#### `pascal_matrix(n):` Generates an n x n Pascal matrix.
+
 
 ## Example Usage
 
 ```python
-import numpy as np
+# Generate a 6x6 Pascal matrix
+A = pascal_matrix(6)
 
-# Define a positive definite matrix
-A = np.array([[1, 1, 1], 
-              [1, 2, 3], 
-              [1, 3, 6]], dtype=np.float64)
+# Perform QR factorization
+Q, R = qr(A)
 
-# Perform Cholesky decomposition
-L, p = Cholesky(A)
+# Compare with NumPy's implementation
+Q_numpy, R_numpy = np.linalg.qr(A)
+compare_matrices_with_tolerance(Q, Q_numpy)
+compare_matrices_with_tolerance(R, R_numpy)
 
-# Validate the result
-Cholesky_validation(A)
-
-# Check if matrix is positive definite
-definida_positiva(A)
+# Reconstruct original matrix
+A_reconstructed = Q @ R
